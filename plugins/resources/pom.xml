@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>plugins</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>resources</artifactId>
+    <packaging>jar</packaging>
+
+    <name>resource plugins</name>
+    <url>https://maven.apache.org</url>
+
+    <build>
+        <filters>
+            <filter>src/filter/my-filter-values.properties</filter>
+        </filters>
+
+        <!--Copy to target/classes-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/resources/additional</directory>
+            </resource>
+            <!--include and exclude-->
+            <resource>
+                <directory>src/resources/xml</directory>
+                <includes>
+                    <include>*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/resources/json</directory>
+                <includes>
+                    <include>include.json</include>
+                </includes>
+                <excludes>
+                    <exclude>exclude.json</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+        <!--Copy to target/test-classes-->
+        <testResources>
+            <testResource>
+                <directory>src/resources/xml</directory>
+                <includes>
+                    <include>*.xml</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/resources/json</directory>
+                <includes>
+                    <include>include.json</include>
+                </includes>
+                <excludes>
+                    <exclude>exclude.json</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration><!-- copy to specific folder-->
+                            <resources>
+                                <resource>
+                                    <directory>src/resources/xml</directory>
+                                    <targetPath>xml</targetPath>
+                                </resource>
+                                <resource>
+                                    <directory>src/resources/json</directory>
+                                    <targetPath>json</targetPath>
+                                    <includes>
+                                        <include>include.json</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>exclude.json</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/source</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/source</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

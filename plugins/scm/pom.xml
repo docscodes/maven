@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>plugins</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>scm</artifactId>
+    <packaging>jar</packaging>
+
+    <name>scm</name>
+    <url>https://maven.apache.org</url>
+
+    <!--mvn scm:status
+    <scm>
+        <connection>scm:git:https://bitbucket.org/user/repo</connection>
+        <developerConnection>scm:git:https://user@bitbucket.org/user/repo</developerConnection>
+        <url>https://bitbucket.org/user/repo</url>
+    </scm>-->
+
+    <!--mvn scm:bootstrap
+    <scm>
+        <connection>scm:git:https://github.com/maruhgar/mvn-examples</connection>
+        <url>https://github.com/maruhgar/mvn-examples</url>
+    </scm>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.12.0</version>
+                <configuration>
+                    <goals>install</goals>
+                    <goalsDirectory>test-properties</goalsDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>-->
+
+    <scm>
+        <connection>scm:git:https://github.com/user/repo</connection>
+        <url>https://github.com/user/repo</url>
+    </scm>
+    <build>
+        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration><!--Git short revision ID-->
+                    <shortRevisionLength>5</shortRevisionLength>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.8.2</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

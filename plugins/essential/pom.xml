@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>plugins</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>essential</artifactId>
+    <packaging>jar</packaging>
+
+    <name>essential plugins</name>
+    <url>https://maven.apache.org</url>
+
+    <properties><!--
+        <JAVA11.HOME>/usr/lib/jvm/java-11-oracle</JAVA11.HOME>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>-->
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version><!--
+                <configuration>
+                    <skip>false</skip>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/report</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>-->
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration><!--alternately, set in properties-->
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <!--
+                    <verbose>true</verbose>
+                    <fork>true</fork>
+                    <executable>${JAVA11.HOME}/bin/javac</executable>
+                    <compilerVersion>11</compilerVersion>
+                    -->
+                    <!-- identify the usage of deprecated APIs
+                    <compilerArgument>-Xlint:deprecation</compilerArgument>-->
+                </configuration>
+            </plugin>
+
+            <!-- unit test, reports -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <!--<configuration>
+                    <skipTests>false</skipTests>
+                </configuration>-->
+            </plugin>
+
+            <!-- integration test-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
